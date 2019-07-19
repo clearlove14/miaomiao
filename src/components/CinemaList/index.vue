@@ -1,21 +1,24 @@
 <template>
     <div class="cinema_body">
-        <ul>
-            <li v-for="item in cinemaList" :key="item.id">
-                <div>
-                    <span>{{item.nm}}</span>
-                    <span class="q"><span class="price">{{item.sellPrice}}</span> 元起</span>
-                </div>
-                <div class="address">
-                    <span>{{item.addr}}</span>
-                    <span>{{item.distance}}</span>
-                </div>
-                <div class="card">
-                    <div v-for="(num,key) in item.tag" v-if="num===1" :key="key" :class="key|classCard">{{key|formatCard}}</div>
+        <Loading v-if="isLoading" />
+        <scroller v-else>
+            <ul>
+                <li v-for="item in cinemaList" :key="item.id">
+                    <div>
+                        <span>{{item.nm}}</span>
+                        <span class="q"><span class="price">{{item.sellPrice}}</span> 元起</span>
+                    </div>
+                    <div class="address">
+                        <span>{{item.addr}}</span>
+                        <span>{{item.distance}}</span>
+                    </div>
+                    <div class="card">
+                        <div v-for="(num,key) in item.tag" v-if="num===1" :key="key" :class="key|classCard">
+                            {{key|formatCard}}</div>
 
-                </div>
-            </li>
-            <!-- <li>
+                    </div>
+                </li>
+                <!-- <li>
                 <div>
                     <span>大地影院(澳东世纪店)</span>
                     <span class="q"><span class="price">22.9</span> 元起</span>
@@ -85,7 +88,8 @@
                     <div>折扣卡</div>
                 </div>
             </li> -->
-        </ul>
+            </ul>
+        </scroller>
     </div>
 </template>
 
@@ -94,14 +98,23 @@
         name: 'CinemaList',
         data() {
             return {
-                cinemaList: []
+                cinemaList: [],
+                isLoading: true,
+                preCityId: -1
             }
         },
-        mounted() {
-            this.axios.get('/api/cinemaList?cityId=10').then((res) => {
+        activated() {
+            var cityId = this.$store.state.city.id;
+            if (this.preCityId === cityId) {
+                return;
+            }
+            this.isLoading = true;
+            this.axios.get('/api/cinemaList?cityId=' + cityId).then((res) => {
                 var msg = res.data.msg;
-                if (msg == 'ok') {
+                if (msg === 'ok') {
+                    this.isLoading = false;
                     this.cinemaList = res.data.data.cinemas;
+                    this.preCityId = cityId;
                 }
             })
         },
@@ -131,7 +144,7 @@
                 }
                 return '';
             },
-            classCard(key){
+            classCard(key) {
                 var card = [{
                         key: 'allowRefund',
                         value: 'bl'

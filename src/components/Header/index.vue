@@ -7,10 +7,10 @@
 <script>
     export default {
         name: "Header",
-        props:{
-            title:{
-                type:String,
-                default:"喵喵电影"
+        props: {
+            title: {
+                type: String,
+                default: "喵喵电影"
             }
         }
     };
