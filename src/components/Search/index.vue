@@ -31,7 +31,7 @@
                     <div class="img"><img :src="item.img|setWH('128.180')"></div>
                     <div class="info">
                         <p><span>{{item.nm}}</span><span>{{item.sc}}</span></p>
-                        <p>{{item.eenm}}</p>
+                        <p>{{item.enm}}</p>
                         <p>{{item.cat}}</p>
                         <p>{{item.rt}}</p>
                     </div>
@@ -59,13 +59,14 @@
         },
         watch: {
             message(newVal) {
-                var that=this;
+                var that = this;
+                var cityId = this.$store.state.city.id;
                 // clearTimeout()
                 // setTimeout()
                 this.cancelRequest();
 
-                this.axios.get('/api/searchList?cityId=10&kw=a' + newVal, {
-                    cancelToken: new this.axios.CancelToken(function(c) {
+                this.axios.get('/api/searchList?cityId=' + cityId + ' &kw=' + newVal, {
+                    cancelToken: new this.axios.CancelToken(function (c) {
                         that.source = c;
                     })
                 }).then((res) => {
@@ -156,11 +157,15 @@
         display: flex;
         line-height: 22px;
         font-size: 12px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .search_body .search_result .info p:nth-of-type(1) span:nth-of-type(1) {
         font-size: 18px;
         flex: 1;
+
     }
 
     .search_body .search_result .info p:nth-of-type(1) span:nth-of-type(2) {

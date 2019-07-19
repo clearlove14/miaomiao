@@ -19,7 +19,7 @@
 
 <script>
     export default {
-        name:"TabBar"
+        name: "TabBar"
     };
 </script>
 
@@ -49,9 +49,11 @@
     #footer ul li.active {
         color: #f03d37;
     }
-    #footer ul li.router-link-active{
+
+    #footer ul li.router-link-active {
         color: #f03d37;
     }
+
     #footer ul i {
         font-size: 20px;
     }
