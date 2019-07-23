@@ -55,6 +55,7 @@
     background: #007DB6;
     border-radius: .6em;
     animation: loading 1s infinite alternate;
+    margin-bottom: 100%;
   }
 
   /*
