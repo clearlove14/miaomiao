@@ -87,7 +87,7 @@
         line-height: 45px;
     }
 
-    .movie_menu .city_name.active {
+    .movie_menu .city_name.router-link-active {
         color: #ef4238;
         border-bottom: 2px #ef4238 solid;
     }
@@ -127,4 +127,5 @@
         font-size: 24px;
         color: red;
     }
+
 </style>
